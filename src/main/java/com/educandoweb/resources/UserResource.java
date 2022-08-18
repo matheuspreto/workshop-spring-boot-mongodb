@@ -16,7 +16,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.educandoweb.domain.User;
 import com.educandoweb.dto.UserDTO;
 import com.educandoweb.services.UserService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @RestController
 @RequestMapping(value="/users")
