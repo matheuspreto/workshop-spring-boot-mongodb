@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.educandoweb.domain.User;
 import com.educandoweb.dto.UserDTO;
 import com.educandoweb.services.UserService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @RestController
 @RequestMapping(value="/users")
@@ -34,7 +35,6 @@ public class UserResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		User obj = service.findById(id);
-		
 		return ResponseEntity.ok().body(new UserDTO(obj));
 		}
 	
@@ -49,7 +49,14 @@ public class UserResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable String id) {
 		 service.delete(id);
-		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> Update(@RequestBody UserDTO objDto, @PathVariable String id) {
+		User obj = service.fromDTO(objDto);
+		obj.setId(id);
+		obj = service.insert(obj);
 		return ResponseEntity.noContent().build();
 	}
 }
